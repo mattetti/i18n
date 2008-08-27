@@ -34,6 +34,7 @@ spec = Gem::Specification.new do |s|
     "lib/i18n/backend/simple.rb",
     "lib/i18n/exceptions.rb",
     "lib/i18n.rb",
+    "rakefile.rb",
     "MIT-LICENSE",
     "README.textile",
     "test/all.rb",
