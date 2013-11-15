@@ -34,7 +34,13 @@ module I18n
             default(locale, key, default, options) : resolve(locale, key, entry, options)
         end
 
-        throw(:exception, I18n::MissingTranslation.new(locale, key, options)) if entry.nil?
+        if entry.nil?
+          if locale =~ /^(\w+)\-\w+$/
+            return translate($1, key, options)
+          else
+            throw(:exception, I18n::MissingTranslation.new(locale, key, options))
+          end
+        end
         entry = entry.dup if entry.is_a?(String)
 
         entry = pluralize(locale, entry, count) if count
