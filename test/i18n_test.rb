@@ -141,6 +141,15 @@ class I18nTest < Test::Unit::TestCase
     I18n.translate :foo, :locale => 'de'
   end
 
+  test "delegates translate calls to the backend with language locale" do
+    I18n.backend.store_translations 'en', 'foo' => {'bar' => 'bar'}
+    assert_equal 'bar', I18n.t('foo.bar', :locale => 'en-US')
+  end
+
+  test "return translation missing if language locale data is not exist" do
+    assert_equal 'translation missing: en.foo.bar', I18n.t('foo.bar', :locale => 'en-US')
+  end
+
   test "delegates localize calls to the backend" do
     I18n.backend.expects(:localize).with('de', :whatever, :default, {})
     I18n.localize :whatever, :locale => 'de'
